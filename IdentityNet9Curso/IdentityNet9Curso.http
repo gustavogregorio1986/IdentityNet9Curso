@@ -1,0 +1,6 @@
+@IdentityNet9Curso_HostAddress = http://localhost:5043
+
+GET {{IdentityNet9Curso_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
