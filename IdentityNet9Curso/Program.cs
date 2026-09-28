@@ -1,4 +1,5 @@
 using IdentityNet9Curso.Data;
+using IdentityNet9Curso.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ builder.Services.AddIdentityCore<IdentityNet9Curso.Models.ApplicationUser>(optio
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IAuthInterface, AuthService>();
 
 var app = builder.Build();
 
