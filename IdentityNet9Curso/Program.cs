@@ -1,4 +1,5 @@
 using IdentityNet9Curso.Data;
+using IdentityNet9Curso.Models;
 using IdentityNet9Curso.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,10 @@ builder.Services.AddIdentityCore<IdentityNet9Curso.Models.ApplicationUser>(optio
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddScoped<IAuthInterface, AuthService>();
 
 var app = builder.Build();
@@ -41,6 +46,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedRoles.CreateRolesAsync(services);
+}
 
 app.Run();
 
